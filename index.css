@@ -1,0 +1,219 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0d1117;
+  font-family: 'Fira Code', 'Consolas', 'Pretendard', monospace, sans-serif;
+  padding: 40px 16px;
+  margin: 0;
+  color: #c9d1d9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-title {
+  font-size: 2rem;
+  color: #58a6ff;
+  margin: 0 0 30px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 12px rgba(88, 166, 255, 0.2);
+}
+
+/* ===== 카드 ===== */
+.tab-card {
+  width: 100%;
+  max-width: 720px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+/* ===== 탭 버튼 ===== */
+.tab-list {
+  display: flex;
+  border-bottom: 1px solid #30363d;
+  background-color: #0d1117;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 16px 10px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #8b949e;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: #c9d1d9;
+  background-color: #161b22;
+}
+
+.tab-btn.active {
+  color: #58a6ff;
+  background-color: #161b22;
+  border-bottom-color: #58a6ff;
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid #58a6ff;
+  outline-offset: -2px;
+}
+
+/* ===== 탭 내용 (높이 400px, 세로 스크롤) ===== */
+.tab-panel {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+.tab-panel.active {
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 스크롤바 */
+.tab-panel::-webkit-scrollbar {
+  width: 8px;
+}
+.tab-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tab-panel::-webkit-scrollbar-thumb {
+  background-color: #30363d;
+  border-radius: 4px;
+}
+.tab-panel::-webkit-scrollbar-thumb:hover {
+  background-color: #484f58;
+}
+.tab-panel {
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+
+/* ===== 카테고리 (호버/탭 시 펼쳐짐) ===== */
+.category {
+  width: 100%;
+  max-height: 56px;
+  overflow: hidden;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: max-height 1.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.category:last-child {
+  margin-bottom: 0;
+}
+
+.category:hover,
+.category:focus-within {
+  max-height: 500px;
+  border-color: #58a6ff;
+  box-shadow: 0 6px 18px rgba(88, 166, 255, 0.2);
+  outline: none;
+}
+
+.category h2 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  color: #58a6ff;
+  border-left: 4px solid #7ee787;
+  padding-left: 10px;
+  line-height: 1.2;
+}
+
+.category a {
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 4px;
+  background-color: #21262d;
+  color: #c9d1d9;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  font-size: 0.88rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.4s ease, background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.category:hover a,
+.category:focus-within a {
+  opacity: 1;
+  transition: opacity 0.8s ease 0.2s, background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.category a:hover {
+  background-color: #238636;
+  color: #ffffff;
+  border-color: #3fb950;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(63, 185, 80, 0.4);
+}
+
+/* ===== 빈 탭 ===== */
+.empty {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b949e;
+  font-size: 1rem;
+  border: 1px dashed #30363d;
+  border-radius: 12px;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 600px) {
+  body {
+    padding: 24px 12px;
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .tab-btn {
+    padding: 14px 6px;
+    font-size: 0.85rem;
+  }
+
+  .tab-panel {
+    padding: 14px;
+  }
+
+  .category {
+    padding: 14px 16px;
+    max-height: 52px;
+  }
+
+  .category h2 {
+    font-size: 0.95rem;
+  }
+
+  .category a {
+    padding: 7px 11px;
+    font-size: 0.8rem;
+  }
+}
