@@ -21,3 +21,4 @@ class Answer(BaseModel):
     id: int
     content: str
     create_date: datetime.datetime
+
