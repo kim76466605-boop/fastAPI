@@ -16,5 +16,11 @@ class QuestionCreate(BaseModel):
     @field_validator('subject', 'content')
     def not_empty(cls, v):
         if not v or not v.strip():
-            raise ValueError("빈 값은 허용되지 않습니다.")
+            raise ValueError('빈 값은 허용되지 않습니다.')
         return v
+
+class QuestionList(BaseModel):
+    total: int = 0
+    # 변수명: 자료형 = 기본값
+    question_list: list[Question] = []
+

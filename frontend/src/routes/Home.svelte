@@ -2,43 +2,68 @@
     import fastapi from "../lib/api"
     import { link } from 'svelte-spa-router'
 
-    let question_list = [] 
+    let question_list = []
+    let size = 10
+    let page = 0
+    let total = 0
+    $: total_page = Math.ceil(total/size) 
 
-    function get_question_list() {
+    function get_question_list(_page) {
+        let params = {
+            page: _page,
+            size:  size,
+        }
         fastapi('get', '/api/question/list', {}, (json) => { 
-            question_list = json
+            question_list = json.question_list
+            page = _page
+            total = json.total
         })        
     }
 
-    get_question_list()
+    get_question_list(0)
 </script>
 
-<div>
+<div class="container my-3">
     <table class="table">
         <thead>
-            <tr class="table-dark">
+            <tr class="table-dark"> 
                 <th>번 호</th>
-                <th>제 목</th>
+                <th>제 목</th> 
                 <th>작 성 일 시</th>
-            </tr>
-        </thead>
+            </tr> 
+        </thead> 
         <tbody>
-            {#each question_list as question, i}
-            <tr>
-                <td>{i+1}</td>
-                <td>
-                    <a use:link href="/detail/{question.id}">{question.subject}</a>
-                </td>
-                <td>{question.create_date}</td>
-            </tr>
-        {/each}
+        {#each question_list as question, i} 
+        <tr>
+            <td>{i+1}</td> 
+            <td>
+                <a use:link href="/detail/{question.id}">{question.subject}</a> 
+            </td>
+            <td>{question.create_date}</td>
+        </tr>
+        {/each} 
         </tbody>
     </table>
+    <!--페이징 처리 시작-->
+    <ul class="pagination justify-content-center">
+            <!--이전 페이지-->
+            <li class="page-item {page <= 0 && 'disabled'}">
+                <button class="page-link" on:click={() => get_question_list(page-1)}>이전</button>
+            </li>
+        {#each Array(total_page) as _, loop_page}
+        {#if loop_page >= page-5 && loop_page <= page+5}
+        <li class="page-item {loop_page === page && 'active'}">
+            <button on:click="{() => get_question_list(loop_page)}" class="page-link">
+                {loop_page+1}
+            </button>
+        </li>
+        {/if}
+        {/each}
+        <!--다음 페이지-->
+        <li class="page-item {page >= total_page-1 && 'disabled'}">
+            <button class="page-link" on:click="{() => get_question_list(page+1)}">다음</button>
+        </li>
+    </ul>
+    <!--페이징 처리끝-->
     <a use:link href="/question-create" class="btn btn-primary">질문 등록하기</a>
 </div>
-<!-- <ul>
-    {#each question_list as question}
-        <li><a use:link href="/detail/{question.id}">{question.subject}</a></li>
-    {/each}
-    <!-- use:link 는 동일한 페이지라고 인식하기 때문에 서버로 페이지 요청을 보내지 않음 -->
-<!-- </ul> -->
