@@ -22,14 +22,14 @@
                 {#if $is_login }
                     <li class="nav-item">
                         <a use:link href="/user-login" class="nav-link" on:click={() => {
-                            $access_token = ''
+                            $access_token = '' 
                             $username = ''
                             $is_login = false
-                        }}>로그아웃({$username})</a>
-                    </li>
+                        }}>로그아웃 ({$username})</a>
+                    </li> 
                 {:else}
                     <li class="nav-item">
-                        <a use:link class="nav-link" href="/user-create">회원 가입 </a> 
+                        <a use:link class="nav-link" href="/user-create">회원가입</a> 
                     </li>
                     <li class="nav-item">
                         <a use:link class="nav-link" href="/user-login">로그인</a> 
